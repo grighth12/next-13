@@ -1,11 +1,18 @@
+"use client";
 
-const template = ({children} : React.PropsWithChildren) => {
+import { useEffect } from "react";
+
+const Template = ({children } : React.PropsWithChildren<{params: any}>) => {
+  // FIXME: This is a hack to get the page title to update
+  useEffect(() => {
+    document.title = "";
+  }, []);
+
   return (
     <>
-      <div>template</div>
       {children}
     </>
   )
 }
 
-export default template
+export default Template
