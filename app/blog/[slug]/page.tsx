@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";;
 import Head from 'next/head';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 interface Props {
   params: {slug : string},
   searchParams: {id:string}
@@ -16,6 +18,8 @@ const getPost = async (id: string) => {
 
 
 const Page = ({params, searchParams}: Props) => {
+  const router = useRouter();
+  
   useEffect(() => {
     const setDocumentTitle = async () => {
       const post = await getPost(params.slug);       
@@ -35,6 +39,8 @@ const Page = ({params, searchParams}: Props) => {
         <p>Slug: {params.slug}</p>
         <p>Id: {searchParams.id}</p>
       </div>
+      <Link href="/">Go to home</Link>
+      <button onClick={() => { router.refresh() }}>refresh</button>
     </>);
 };
 
