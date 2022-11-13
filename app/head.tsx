@@ -1,4 +1,13 @@
+'use client';
+
+import { useEffect } from "react";
+
+
 const Head = () => {
+  useEffect(() => {
+    document.title = "My App";
+  }, []);
+
   return (
     <>
       <title>Title 22</title>

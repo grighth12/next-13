@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect } from "react"
 
 interface Props {
   params: {slug : string},
@@ -13,6 +16,10 @@ const getPost = async (id: string) => {
 
 const BlogHead = async ({ params }: Props) => {
   const post = await getPost(params.slug);
+
+  useEffect(() => {
+    document.title = post.title;
+  }, [post])
 
   return (
     <>

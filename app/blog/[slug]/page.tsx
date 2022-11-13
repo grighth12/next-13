@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from "react";;
-import Head from 'next/head';
+import { Suspense, useEffect, useState } from "react";;
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Loading from "./loading";
 interface Props {
   params: {slug : string},
   searchParams: {id:string}
@@ -18,12 +18,14 @@ const getPost = async (id: string) => {
 
 
 const Page = ({params, searchParams}: Props) => {
+  const [post, setPost] = useState(null);
   const router = useRouter();
   
   useEffect(() => {
     const setDocumentTitle = async () => {
       const post = await getPost(params.slug);       
       document.title = post.title;
+      setPost(post);
     }
 
     setDocumentTitle();
@@ -31,16 +33,13 @@ const Page = ({params, searchParams}: Props) => {
 
 
   return (<>
-      <Head>
-        <title>Blog Post</title>
-      </Head>
-      <div>
-        <h1>Blog Post</h1>
-        <p>Slug: {params.slug}</p>
-        <p>Id: {searchParams.id}</p>
-      </div>
-      <Link href="/">Go to home</Link>
-      <button onClick={() => { router.refresh() }}>refresh</button>
+        <div>
+          <h1>{post?.title}</h1>
+          <p>Slug: {params.slug}</p>
+          <p>Id: {searchParams.id}</p>
+        </div>
+        <Link href="/">Go to home</Link>
+        <button onClick={() => { router.refresh() }}>refresh</button>
     </>);
 };
 
